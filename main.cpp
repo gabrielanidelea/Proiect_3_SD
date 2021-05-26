@@ -225,6 +225,8 @@ public:
             }
             return;
     }
+
+    //-----------SUCCESOR + PREDECESOR------------------------//
     int get_succesor(int y)
     {
         if(radacina == NULL)
@@ -318,7 +320,7 @@ public:
             }
         }
     }
-
+//------------------------------------------------------------------//
 
 };
 
@@ -415,8 +417,12 @@ void BArboreEnti:: sterge(int y)
             return;
         }
 
-        bool ok = ( (index==n)? true : false); // daca cheia e prezenta in subarborele care are ca radacina ultimul copil al nodului curent => true; altfel => false
-        if(C[index]->n < B) // daca locul unde ar trebui sa fie cheia noasra permite inserarea acesteia, atunci folosim fct umple
+        bool ok;
+        if(index==n)
+            ok = true; // daca cheia e prezenta in subarborele care are ca radacina ultimul copil al nodului curent => true;
+        else
+            ok = false;
+        if(C[index]->n < B) // daca locul unde ar trebui sa fie cheia noastra permite inserarea acesteia, atunci folosim fct umple
             umple(index);
 
         if(ok && index > n) // daca ultimului copil i-a fost facut merge-ul cu predecesorul sau => operam C[index-1]
@@ -430,7 +436,7 @@ void BArboreEnti:: sterge(int y)
 }
 void BArboreEnti::stergefrunza(int index)
 {
-    for(int i = index + 1; i < n; ++i) // mutam toate cheile de dupa poizitia index-ului in spate cu 1
+    for(int i = index + 1; i < n; ++i) // mutam toate cheile de dupa pozitia index-ului in spate cu 1
         keys[i - 1] = keys[i];
 
     n--; // decrementam n-ul
@@ -469,7 +475,7 @@ int BArboreEnti::succesor(int index)
 {
     BArboreEnti *curent = C[index + 1];
     while(curent->efrunza == false)// cat timp nodul curent nu este frunza
-        curent = curent->C[0];// continuam parcurgerea arborelui spre stangfa pana gasim o frunza
+        curent = curent->C[0];// continuam parcurgerea arborelui spre stanga pana gasim o frunza
     return curent-> keys[0]; // prima cheie dintre frunze
 }
 int BArboreEnti::predecesor(int index)
@@ -481,9 +487,9 @@ int BArboreEnti::predecesor(int index)
 }
 void BArboreEnti::umple(int index)
 {
-    if(index!=0 && C[index - 1]-> n>=B) // daca C[index-1] are mai mult de B-1 chei
+    if(index!=0 && C[index - 1]-> n>=B) // daca C[index-1] are mai mult de B chei
         imprumutpred(index); //, imprumutam o cheie de la acel copil
-    else if(index!=n && C[index + 1]->n>=B) // altfel, daca C[index+1] are mai mult de B-1 chei
+    else if(index!=n && C[index + 1]->n>=B) // altfel, daca C[index+1] are mai mult de B chei
         imprumutsucc(index); //, imprumutam o cheie de la acel copil
     else
     {
@@ -510,7 +516,7 @@ void BArboreEnti:: imprumutsucc(int index)
     keys[index] = sibling->keys[0]; // prima cheie din sibling se insereaza in keys[index]
 
 
-    for(int i=1; i < sibling->n; ++i) // mutam toate cheile din sibling cu un loc mai joc
+    for(int i=1; i < sibling->n; ++i) // mutam toate cheile din sibling cu un loc mai jos
         sibling->keys[i - 1] = sibling->keys[i];
 
     if(!sibling->efrunza) // daca sibling nu e frunza
