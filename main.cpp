@@ -667,7 +667,10 @@ int main()
                         B.insert(5);
 
                         int y = 18;
-                        (B.cautare(y) != NULL)? cout << "Nodul "<< y <<" a fost gasit in B-Arbore." : cout << "Nodul "<< y << " nu este prezent in B-Arbore.";
+                        if(B.cautare(y) != NULL)
+                            cout << "Nodul "<< y <<" a fost gasit in B-Arbore.";
+                        else
+                            cout << "Nodul "<< y << " nu este prezent in B-Arbore.";
                         break;
                     }
                     case 4: {
